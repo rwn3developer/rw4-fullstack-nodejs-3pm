@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2 align="center">View Users</h2>
+    <table border="1" align="center">
+        <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Phone</th>
+        </thead>
+        <tbody>
+            <% data.map((val,index)=>{ %>
+                <tr>
+                    <td>
+                        <%= ++index %>
+                    </td>
+                    <td>
+                        <%= val.name %>
+                    </td>
+                    <td>
+                        <%= val.phone %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>
