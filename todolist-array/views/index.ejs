@@ -14,6 +14,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Phone</th>
+            <th>Action</th>
         </thead>
         <tbody>
             <% data.map((val,index)=>{ %>
@@ -27,10 +28,17 @@
                     <td>
                         <%= val.phone %>
                     </td>
+                    <td>
+                        <a href="/deleteuser?deleteId=<%= val.id %>">Delete</a>
+                    </td>
                 </tr>
                 <% }) %>
         </tbody>
+
     </table>
+    <div align=" center">
+        <a href="/add">Add</a>
+    </div>
 </body>
 
 </html>

@@ -6,17 +6,43 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-const record = [
-    { id: 1, name: 'John', phone: 25 },
-    { id: 2, name: 'Jane', phone: 30 },
-    { id: 3, name: 'Bob', phone: 35 },
-]
+let record = []
+
+app.use(express.urlencoded());
+
 app.get('/', (req, res) => {
     return res.render('index', {
         data: record,
     })
 })
 
+app.get('/add', (req, res) => {
+    return res.render('add')
+})
+
+app.post('/insertrecord', (req, res) => {
+
+    const { username, userphone } = req.body;
+    let obj = {
+        id: Date.now(),
+        name: username,
+        phone: userphone
+    }
+    record.push(obj);
+    console.log("successfully add");
+
+    return res.redirect('/')
+
+})
+app.get('/deleteuser', (req, res) => {
+    let id = req.query.deleteId;
+    let d = record.filter(val => val.id != id);
+    record = d;
+    console.log("record delete");
+    return res.redirect('/')
+
+
+})
 
 app.listen(port, (err) => {
     if (err) {
