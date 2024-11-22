@@ -40,8 +40,28 @@ app.get('/deleteuser', (req, res) => {
     record = d;
     console.log("record delete");
     return res.redirect('/')
+})
 
-
+app.get('/edituser', (req, res) => {
+    let id = req.query.editId;
+    let single = record.find(val => val.id == id);
+    console.log(single);
+    return res.render('edit', {
+        data: single
+    })
+})
+app.post('/updaterecord', (req, res) => {
+    const { editid, username, userphone } = req.body;
+    let up = record.map((val) => {
+        if (val.id == editid) {
+            val.name = username;
+            val.phone = userphone;
+        }
+        return val;
+    })
+    record = up;
+    console.log("successfully update");
+    return res.redirect('/')
 })
 
 app.listen(port, (err) => {
