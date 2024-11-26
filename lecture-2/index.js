@@ -14,9 +14,3 @@ app.listen(8000, (err) => {
 
 })
 
-dhruvi
-raj donda
-meet shingala
-jay shingala
-mahil dabhoya
-vasu bodarya
