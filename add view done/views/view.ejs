@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View User</title>
+</head>
+
+<body>
+    <div align="center">
+        <h2 align="center">View User</h2>
+        <table align="center" border="1">
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Password</td>
+            </tr>
+            <% alldata.map((val,i)=>{ %>
+                <tr>
+                    <td>
+                        <%= ++i %>
+                    </td>
+                    <td>
+                        <%= val.username %>
+                    </td>
+                    <td>
+                        <%= val.useremail %>
+                    </td>
+                    <td>
+                        <%= val.userpassword %>
+                    </td>
+                </tr>
+                <% }) %>
+
+
+        </table>
+        <a href="/add">Add</a>
+    </div>
+</body>
+
+</html>
