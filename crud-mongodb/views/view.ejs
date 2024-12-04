@@ -16,6 +16,10 @@
                 <td>Name</td>
                 <td>Email</td>
                 <td>Password</td>
+                <td>Gender</td>
+                <td>Hobby</td>
+                <td>City</td>
+                <td>Action</td>
             </tr>
             <% alldata.map((val,i)=>{ %>
                 <tr>
@@ -30,6 +34,19 @@
                     </td>
                     <td>
                         <%= val.userpassword %>
+                    </td>
+                    <td>
+                        <%= val.gender %>
+                    </td>
+                    <td>
+                        <%= val.hobby %>
+                    </td>
+                    <td>
+                        <%= val.city %>
+                    </td>
+                    <td>
+                        <a href="/deleteuser?id=<%= val.id %>">Delete</a>
+                        <a href="/edituser?id=<%= val.id %>">Edit</a>
                     </td>
                 </tr>
                 <% }) %>

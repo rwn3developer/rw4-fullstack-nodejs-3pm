@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Record</title>
+</head>
+
+<body>
+    <div align="center">
+        <h2>Add User</h2>
+        <form method="post" action="/insertrecord">
+            <table border="1">
+                <tr>
+                    <td>Name :- </td>
+                    <td><input type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <td>Email :- </td>
+                    <td><input type="email" name="email"></td>
+                </tr>
+                <tr>
+                    <td>Password :- </td>
+                    <td><input type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td>Gender :- </td>
+                    <td>
+                        <input type="radio" value="male" name="gender">Male
+                        <input type="radio" value="female" name="gender">Female
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hobby :- </td>
+                    <td>
+                        <input type="checkbox" value="cricket" name="hobby">Cricket
+                        <input type="checkbox" value="reading" name="hobby">Reading
+                        <input type="checkbox" value="dancing" name="hobby">Dancing
+                    </td>
+                </tr>
+                <tr>
+                    <td>City :- </td>
+                    <td>
+                        <select name="city">
+                            <option value="">---select city----</option>
+                            <% city=["surat","vadodara","vapi","valsad"]; city.map((c)=>{%>
+                                <option value="<%= c %>">
+                                    <%= c %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+        <a href="/">View</a>
+
+    </div>
+</body>
+
+</html>
