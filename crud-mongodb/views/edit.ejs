@@ -10,7 +10,7 @@
 <body>
     <div align="center">
         <h2>Edit User</h2>
-        <form method="post" action="/updaterecord">
+        <form method="post" action="/updaterecord" enctype="multipart/form-data">
             <input type="hidden" name="editid" value="<%= single.id %>">
             <table border="1">
                 <tr>
@@ -58,6 +58,13 @@
                                 </option>
                                 <% }) %>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>File :- </td>
+                    <td>
+                        <input type="file" name="image">
+                        <img src="<%= single.image %>" width="100" alt="">
                     </td>
                 </tr>
                 <tr>

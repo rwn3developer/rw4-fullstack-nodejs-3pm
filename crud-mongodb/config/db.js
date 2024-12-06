@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-mongoose.connect(`mongodb://localhost/connection`);
+mongoose.connect(`mongodb://localhost/crud-mongodb`);
 
 const db = mongoose.connection;
 

@@ -19,6 +19,7 @@
                 <td>Gender</td>
                 <td>Hobby</td>
                 <td>City</td>
+                <td>Image</td>
                 <td>Action</td>
             </tr>
             <% alldata.map((val,i)=>{ %>
@@ -43,6 +44,9 @@
                     </td>
                     <td>
                         <%= val.city %>
+                    </td>
+                    <td>
+                        <img src="<%= val.image %>" width="100" alt="">
                     </td>
                     <td>
                         <a href="/deleteuser?id=<%= val.id %>">Delete</a>
