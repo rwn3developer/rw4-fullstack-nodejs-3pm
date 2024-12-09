@@ -28,6 +28,10 @@ const userSchema = mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    images: {
+        type: Array,
+        required: true
     }
 })
 

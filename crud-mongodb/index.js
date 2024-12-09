@@ -21,13 +21,16 @@ const st = multer.diskStorage({
         cb(null, "uploads")
     },
     filename: (req, file, cb) => {
-        const uniqname = `${Date.now()}-${Math.random() * 100000}`;
+        const uniqname = `${Math.floor(Math.random() * 10000000)}`;
         cb(null, `${file.fieldname}-${uniqname}`)
     }
 })
 
 
-const fileUpload = multer({ storage: st }).single("image");
+const fileUpload = multer({ storage: st }).fields([
+    { name: "image", maxCount: 1 },
+    { name: "images", maxCount: 10 },
+])
 
 app.use(express.urlencoded());
 
@@ -50,7 +53,10 @@ app.get('/add', (req, res) => {
 
 app.post('/insertrecord', fileUpload, (req, res) => {
     const { name, email, password, gender, hobby, city } = req.body;
-    console.log(req.file);
+    let mdata = []
+    const mfiles = req.files.images.map((img) => {
+        mdata.push(img.path)
+    })
 
     UserModel.create({
         username: name,
@@ -59,7 +65,8 @@ app.post('/insertrecord', fileUpload, (req, res) => {
         gender: gender,
         hobby: hobby,
         city: city,
-        image: req.file.path
+        image: req.files.image[0].path,
+        images: mdata
     }).then((data) => {
         console.log("record successfully add");
         return res.redirect('/add')
@@ -105,6 +112,14 @@ app.post('/updateRecord', fileUpload, (req, res) => {
 
     const { editid, name, email, password, gender, hobby, city } = req.body;
     console.log(editid);
+    console.log(name);
+    console.log(email);
+    console.log(password);
+    console.log(gender);
+    console.log(hobby);
+    console.log(city);
+
+
     if (req.file) {
         UserModel.findById(editid)
             .then((single) => {
@@ -114,13 +129,13 @@ app.post('/updateRecord', fileUpload, (req, res) => {
                 return false;
             });
         UserModel.findByIdAndUpdate(editid, {
-            name: name,
-            email: email,
-            password: password,
+            username: name,
+            useremail: email,
+            userpassword: password,
             gender: gender,
             hobby: hobby,
             city: city,
-            image: req.file.path
+            image: mdata
         }).then((response) => {
             console.log("Record update");
             return res.redirect('/');
@@ -132,41 +147,25 @@ app.post('/updateRecord', fileUpload, (req, res) => {
         UserModel.findById(editid)
             .then((single) => {
                 UserModel.findByIdAndUpdate(editid, {
-                    name: name,
-                    email: email,
-                    password: password,
+                    username: name,
+                    useremail: email,
+                    userpassword: password,
                     gender: gender,
                     hobby: hobby,
                     city: city,
                     image: single.image
-                }).then((response) => {
-                    console.log("Record update");
-                    return res.redirect('/');
+                }).then((data) => {
+                    return res.redirect('/')
                 }).catch((err) => {
                     console.log(err);
-                    return false;
+                    return false
                 })
             }).catch((err) => {
                 console.log(err);
                 return false;
-            });
-
+            })
     }
-
-    // UserModel.findByIdAndUpdate(editid,{
-    //     name : name,
-    //     email : email,
-    //     password : password
-    // }).then((response)=>{
-    //     console.log("Record update");
-    //     return res.redirect('/');
-    // }).catch((err)=>{
-    //     console.log(err);
-    //     return false;
-    // })
 })
-
-
 app.listen(port, (err) => {
     if (err) {
         console.log(err);

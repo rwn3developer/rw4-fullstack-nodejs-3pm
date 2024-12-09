@@ -20,6 +20,7 @@
                 <td>Hobby</td>
                 <td>City</td>
                 <td>Image</td>
+                <td>Images</td>
                 <td>Action</td>
             </tr>
             <% alldata.map((val,i)=>{ %>
@@ -47,6 +48,11 @@
                     </td>
                     <td>
                         <img src="<%= val.image %>" width="100" alt="">
+                    </td>
+                    <td>
+                        <% val.images.map((img)=>{ %>
+                            <img src="<%= img %>" width="100" />
+                            <% }) %>
                     </td>
                     <td>
                         <a href="/deleteuser?id=<%= val.id %>">Delete</a>
