@@ -68,6 +68,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Multiple File</td>
+                    <td>
+                        <input type="file" multiple name="images">
+                        <% single.images.map((img)=>{ %>
+                            <div>
+                                <img src="<%= img %>" width="100" />
+                            </div>
+                            <% }) %>
+                    </td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input type="submit"></td>
                 </tr>

@@ -79,7 +79,12 @@ app.get(`/deleteuser`, (req, res) => {
     let id = req.query.id;
     UserModel.findById(id)
         .then((single) => {
-            fs.unlinkSync(single.image)
+            fs.unlinkSync(single.image);
+
+            //old image remove in path
+            single.images.map((img) => {
+                fs.unlinkSync(img)
+            })
         }).catch((err) => {
             console.log(err);
             return false
@@ -108,26 +113,29 @@ app.get('/edituser', (req, res) => {
 
 //update record
 app.post('/updateRecord', fileUpload, (req, res) => {
-
-
     const { editid, name, email, password, gender, hobby, city } = req.body;
-    console.log(editid);
-    console.log(name);
-    console.log(email);
-    console.log(password);
-    console.log(gender);
-    console.log(hobby);
-    console.log(city);
+    if (req.files) {
 
-
-    if (req.file) {
         UserModel.findById(editid)
             .then((single) => {
                 fs.unlinkSync(single.image)
+                //old image remove in path
+                single.images.map((img) => {
+                    fs.unlinkSync(img)
+                })
+
             }).catch((err) => {
                 console.log(err);
                 return false;
             });
+
+        //new image add
+        let mdata = []
+        req.files.images.map((img) => {
+            mdata.push(img.path)
+        })
+
+
         UserModel.findByIdAndUpdate(editid, {
             username: name,
             useremail: email,
@@ -135,7 +143,8 @@ app.post('/updateRecord', fileUpload, (req, res) => {
             gender: gender,
             hobby: hobby,
             city: city,
-            image: mdata
+            image: req.files.image[0].path,
+            images: mdata
         }).then((response) => {
             console.log("Record update");
             return res.redirect('/');
@@ -144,6 +153,7 @@ app.post('/updateRecord', fileUpload, (req, res) => {
             return false;
         })
     } else {
+
         UserModel.findById(editid)
             .then((single) => {
                 UserModel.findByIdAndUpdate(editid, {
@@ -153,7 +163,8 @@ app.post('/updateRecord', fileUpload, (req, res) => {
                     gender: gender,
                     hobby: hobby,
                     city: city,
-                    image: single.image
+                    image: single.image,
+                    images: single.images
                 }).then((data) => {
                     return res.redirect('/')
                 }).catch((err) => {

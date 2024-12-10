@@ -50,9 +50,12 @@
                         <img src="<%= val.image %>" width="100" alt="">
                     </td>
                     <td>
-                        <% val.images.map((img)=>{ %>
-                            <img src="<%= img %>" width="100" />
-                            <% }) %>
+                        <ul>
+                            <% val.images.map((img)=>{ %>
+                                <li style="margin-bottom: 20px;"> <img src="<%= img %>" width="100" /></li>
+                                <% }) %>
+                        </ul>
+
                     </td>
                     <td>
                         <a href="/deleteuser?id=<%= val.id %>">Delete</a>
