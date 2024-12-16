@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div align="center">
+        <h2>Edit User</h2>
+        <form action="/updatedata" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="editid" value="<%= single.id %>">
+            <table border="1">
+                <tr>
+                    <td>Name :-</td>
+                    <td><input type="text" name="name" value="<%= single.name %>"></td>
+                </tr>
+                <tr>
+                    <td>Phone :-</td>
+                    <td><input type="text" name="phone" value="<%= single.phone %>"></td>
+                </tr>
+                <tr>
+                    <td>Image :-</td>
+                    <td>
+                        <input type="file" name="avatar">
+                        <img src="<%= single.image %>" width="100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+        <a href="/">View</a>
+    </div>
+</body>
+
+</html>
