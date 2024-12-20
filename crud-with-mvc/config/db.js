@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(`mongodb://localhost/mvc-crud`);
 
-const db = mongoose.connection;
+const connectDb = async () => {
+    try {
+        const db = await mongoose.connect(`mongodb+srv://SaurabhKachhadiya:SaurabhKachhadiya@cluster0.7att4.mongodb.net/mongodb-crud`);
+        console.log(`Database is successfully connected in host ${db.connection.host}`);
 
-db.on("connected", (err) => {
-    if (err) {
+    } catch (err) {
         console.log(err);
         return false;
     }
-    console.log(`database is connected`);
-})
+}
 
-module.exports = db;
+module.exports = connectDb;
+
