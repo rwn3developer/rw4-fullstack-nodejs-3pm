@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div align="center">
+        <h2>View User</h2>
+        <table border="1">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Action</th>
+            </tr>
+            <% users.map((val)=>{
+                const {id,name,email,password} = val;
+                %>
+                <tr>
+                    <td>
+                        <%= id %>
+                    </td>
+                    <td>
+                        <%= name %>
+                    </td>
+                    <td>
+                        <%= email %>
+                    </td>
+                    <td>
+                        <%= password %>
+                    </td>
+                    <td>
+                        <a href="/deleteuser?id=<%= id %>">Delete</a>
+                        <a href="/edituser?id=<%= id %>">Edit</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+        <a href="/add">Add</a>
+
+    </div>
+</body>
+
+</html>
