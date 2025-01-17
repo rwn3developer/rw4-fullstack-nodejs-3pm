@@ -6,7 +6,8 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-const db = require('./config/db');
+const connectDB = require('./config/db');
+connectDB(); // Connect to MongoDB
 
 app.use(express.urlencoded());
 
