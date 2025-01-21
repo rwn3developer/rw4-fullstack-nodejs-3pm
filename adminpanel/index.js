@@ -1,6 +1,6 @@
 const express = require('express');
 
-const port = 9000;
+const port = 8000;
 
 const app = express();
 
@@ -32,6 +32,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setUser);
 //authentication end passportjs
+
+//connect flash middleware start
+const flash = require('connect-flash');
+app.use(flash());
+
+app.use(function (req, res, next) {
+    res.locals.message = req.flash()
+    return next();
+})
+//connect flash middleware end
 
 app.use(express.urlencoded());
 
