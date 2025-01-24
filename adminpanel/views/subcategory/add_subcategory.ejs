@@ -7,7 +7,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Add Category</h4>
+                    <h4 class="page-title">Add Subcategory</h4>
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -43,16 +43,29 @@
 
 
                             <div class="card">
-                                <form class="form-horizontal" method="post" action="/category/insertcategory">
+                                <form class="form-horizontal" method="post" action="/subcategory/insertsubcategory">
                                     <div class="card-body">
-                                        <h4 class="card-title">Category</h4>
+                                        <h4 class="card-title">Subcategory</h4>
                                         <div class="form-group row">
                                             <label for="fname"
-                                                class="col-sm-3 text-right control-label col-form-label">Category
-                                                Name</label>
+                                                class="col-sm-3 text-right control-label col-form-label">Category</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="category" class="form-control"
-                                                    placeholder="Category Name Here">
+                                                <select name="category" class="form-control">
+                                                    <option>---select category---</option>
+                                                    <% category.map((cat,index)=>{ %>
+                                                        <option value="<%= cat?.id %>">
+                                                            <%= cat?.category %>
+                                                        </option>
+                                                        <% }) %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fname"
+                                                class="col-sm-3 text-right control-label col-form-label">Subcategory</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="subcategory" class="form-control"
+                                                    placeholder="Subcategory Name Here">
                                             </div>
                                         </div>
 

@@ -46,6 +46,52 @@ const deleteCategory = async (req, res) => {
         return false;
     }
 }
+const editCategory = async (req, res) => {
+    try {
+        let id = req.query.id;
+        let singlecategory = await Category.findById(id);
+        return res.render('category/edit_category', {
+            single: singlecategory
+        });
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+const updateCategory = async (req, res) => {
+    try {
+        const { editid, category } = req.body;
+        let upcategory = await Category.findByIdAndUpdate(editid, {
+            category: category
+        })
+        req.flash('success', "Category Successfully Update");
+        return res.redirect('/category');
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+const changeStatus = async (req, res) => {
+    try {
+        let id = req.query.id;
+        let status = req.query.status;
+        if (status === "deactive") {
+            await Category.findByIdAndUpdate(id, {
+                status: 'deactive'
+            })
+        } else {
+            await Category.findByIdAndUpdate(id, {
+                status: 'active'
+            })
+        }
+        req.flash('success', "Category Successfully Changed");
+        return res.redirect('/category');
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
 module.exports = {
-    viewCategory, addCategory, insertCategory, deleteCategory
+    viewCategory, addCategory, insertCategory, deleteCategory, editCategory, updateCategory, changeStatus
 }

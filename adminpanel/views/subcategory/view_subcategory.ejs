@@ -53,38 +53,42 @@
                                                 <tr>
                                                     <th scope="col">Id</th>
                                                     <th scope="col">Category</th>
+                                                    <th scope="col">Subcategory</th>
                                                     <th scope="col">Action</th>
                                                     <th scope="col">Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% categories.map((cat,index)=>{ %>
+                                                <% subcategory.map((subcat,index)=>{ %>
                                                     <tr>
                                                         <th scope="row">
                                                             <%= ++index %>
                                                         </th>
                                                         <td>
-                                                            <%= cat?.category %>
+                                                            <%= subcat?.categoryId?.category %>
                                                         </td>
                                                         <td>
-                                                            <a href="/category/deletecategory?id=<%= cat?.id %>"
+                                                            <%= subcat?.subcategory %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/subcategory/deletesubcategory?id=<%= subcat?.id %>"
                                                                 class="btn btn-danger btn-sm">Delete</a>
 
 
-                                                            <a href="/category/editcategory?id=<%= cat?.id %>"
+                                                            <a href="/subcategory/editsubcategory?id=<%= subcat?.id %>"
                                                                 class="btn btn-primary btn-sm">Edit</a>
                                                         </td>
                                                         <td>
 
-                                                            <% if(cat?.status==="active" ) { %>
-                                                                <a href="/category/changestatus?id=<%= cat?.id %>&status=deactive"
+                                                            <% if(subcat?.status==="active" ) { %>
+                                                                <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=deactive"
                                                                     class="btn btn-success btn-sm">
-                                                                    <%= cat?.status %>
+                                                                    <%= subcat?.status %>
                                                                 </a>
                                                                 <% } else { %>
-                                                                    <a href="/category/changestatus?id=<%= cat?.id %>&status=active"
+                                                                    <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=active"
                                                                         class="btn btn-danger btn-sm">
-                                                                        <%= cat?.status %>
+                                                                        <%= subcat?.status %>
                                                                     </a>
                                                                     <% } %>
 

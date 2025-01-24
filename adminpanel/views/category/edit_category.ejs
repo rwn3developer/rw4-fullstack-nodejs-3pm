@@ -7,7 +7,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Add Category</h4>
+                    <h4 class="page-title">Edit Category</h4>
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -35,15 +35,12 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <% if(locals?.message?.success) { %>
-                        <div class="alert alert-success" role="alert">
-                            <%= locals?.message?.success %>
-                        </div>
-                        <% } %>
+                    
 
 
                             <div class="card">
-                                <form class="form-horizontal" method="post" action="/category/insertcategory">
+                                <form class="form-horizontal" method="post" action="/category/updatecategory">
+                                    <input type="hidden" name="editid" value="<%= single?.id %>">
                                     <div class="card-body">
                                         <h4 class="card-title">Category</h4>
                                         <div class="form-group row">
@@ -51,8 +48,8 @@
                                                 class="col-sm-3 text-right control-label col-form-label">Category
                                                 Name</label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="category" class="form-control"
-                                                    placeholder="Category Name Here">
+                                                <input type="text" value="<%= single?.category %>" name="category"
+                                                    class="form-control" placeholder="Category Name Here">
                                             </div>
                                         </div>
 
