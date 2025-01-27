@@ -43,15 +43,16 @@
 
 
                             <div class="card">
-                                <form class="form-horizontal" method="post" action="/subcategory/insertsubcategory">
+                                <form class="form-horizontal" method="post" action="/exsubcategory/insertexsubcategory">
                                     <div class="card-body">
                                         <h4 class="card-title">Exsubcategory</h4>
                                         <div class="form-group row">
                                             <label for="fname"
                                                 class="col-sm-3 text-right control-label col-form-label">Category</label>
                                             <div class="col-sm-9">
-                                                <select name="category" class="form-control">
-                                                    <option>---select category---</option>
+                                                <select name="category" id="category" onchange="categoryRecord()"
+                                                    class="form-control">
+                                                    <option value="">---select category---</option>
                                                     <% category.map((cat,index)=>{ %>
                                                         <option value="<%= cat?.id %>">
                                                             <%= cat?.category %>
@@ -64,13 +65,8 @@
                                             <label for="fname"
                                                 class="col-sm-3 text-right control-label col-form-label">Subcategory</label>
                                             <div class="col-sm-9">
-                                                <select name="subcategory" class="form-control">
-                                                    <option>---select subcategory---</option>
-                                                    <% subcategory.map((subcat,index)=>{ %>
-                                                        <option value="<%= subcat?.id %>">
-                                                            <%= subcat?.subcategory %>
-                                                        </option>
-                                                        <% }) %>
+                                                <select name="subcategory" id="subcategory" class="form-control">
+                                                    <option value="">---select subcategory---</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -122,5 +118,25 @@
         <!-- End footer -->
         <!-- ============================================================== -->
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        const categoryRecord = () => {
+            let categoryid = document.getElementById('category').value;
+            $.ajax({
+                type: "GET",
+                url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryid}`,
+                success: function (res) {
 
+                    let category = res.category;
+                    let tbl = "";
+                    tbl += `<option value="">---select subcategory---</option>`
+                    category.map((cat, index) => {
+                        tbl += `<option value='${cat?._id}'>${cat?.subcategory}</option>`
+                    })
+                    document.getElementById('subcategory').innerHTML = tbl
+
+                }
+            })
+        }
+    </script>
     <%- include('../footer') %>

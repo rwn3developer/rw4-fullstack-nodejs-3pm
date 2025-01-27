@@ -1,4 +1,8 @@
 const Category = require('../models/CategoryModel');
+const Subcategory = require('../models/SubcategoryModel');
+const ExSubcategory = require('../models/ExsubcategoryModel');
+
+
 
 const viewCategory = async (req, res) => {
     try {
@@ -39,6 +43,8 @@ const deleteCategory = async (req, res) => {
     try {
         let id = req.query.id;
         await Category.findByIdAndDelete(id);
+        await Subcategory.deleteMany({ categoryId: id });
+        await ExSubcategory.deleteMany({ categoryId: id });
         req.flash('delete', "category successfully delete");
         return res.redirect('/category');
     } catch (err) {

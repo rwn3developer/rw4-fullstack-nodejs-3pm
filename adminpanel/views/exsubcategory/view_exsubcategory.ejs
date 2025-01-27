@@ -61,37 +61,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% [].map((subcat,index)=>{ %>
+                                                <% exsubcategory.map((exsubcat,index)=>{ %>
                                                     <tr>
                                                         <th scope="row">
                                                             <%= ++index %>
                                                         </th>
                                                         <td>
-                                                            <%= subcat?.categoryId?.category %>
+                                                            <%= exsubcat?.categoryId?.category %>
                                                         </td>
                                                         <td>
-                                                            <%= subcat?.subcategory %>
+                                                            <%= exsubcat?.subcategoryId?.subcategory %>
                                                         </td>
-                                                        <td></td>
                                                         <td>
-                                                            <a href="/subcategory/deletesubcategory?id=<%= subcat?.id %>"
+                                                            <%= exsubcat?.exsubcategory %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/exsubcategory/deleteexsubcategory?id=<%= exsubcat?.id %>"
                                                                 class="btn btn-danger btn-sm">Delete</a>
 
 
-                                                            <a href="/subcategory/editsubcategory?id=<%= subcat?.id %>"
+                                                            <a href="/exsubcategory/editexsubcategory?id=<%= exsubcat?.id %>"
                                                                 class="btn btn-primary btn-sm">Edit</a>
                                                         </td>
                                                         <td>
 
-                                                            <% if(subcat?.status==="active" ) { %>
-                                                                <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=deactive"
+                                                            <% if(exsubcat?.status==="active" ) { %>
+                                                                <a href="/exsubcategory/changestatus?id=<%= exsubcat?.id %>&status=deactive"
                                                                     class="btn btn-success btn-sm">
-                                                                    <%= subcat?.status %>
+                                                                    <%= exsubcat?.status %>
                                                                 </a>
                                                                 <% } else { %>
-                                                                    <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=active"
+                                                                    <a href="/exsubcategory/changestatus?id=<%= exsubcat?.id %>&status=active"
                                                                         class="btn btn-danger btn-sm">
-                                                                        <%= subcat?.status %>
+                                                                        <%= exsubcat?.status %>
                                                                     </a>
                                                                     <% } %>
 
