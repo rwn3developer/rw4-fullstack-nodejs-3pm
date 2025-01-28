@@ -69,10 +69,27 @@ const deleteExSubcategory = async (req, res) => {
         return false
     }
 }
+const editExsubcategory = async (req, res) => {
+    try {
+        let id = req.query.id;
+        let categories = await CategoryModel.find({ status: 'active' });
+        let subcategories = await SubCategoryModel.find({ status: 'active' }).populate('categoryId');
+        let single = await ExSubCategoryModel.findById(id).populate('categoryId').populate('subcategoryId');
+
+
+        return res.render('exsubcategory/edit_exsubcategory', {
+            category: categories,
+            single: single,
+            subcategory: subcategories
+        });
+    } catch (err) {
+        console.log(err);
+        return false
+    }
+}
 const changeStatus = async (req, res) => {
     try {
         const { id, status } = req.query;
-
         if (status === "active") {
             await ExSubCategoryModel.findByIdAndUpdate(id, { status: 'active' })
         } else {
@@ -86,5 +103,5 @@ const changeStatus = async (req, res) => {
     }
 }
 module.exports = {
-    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus
+    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory
 }
