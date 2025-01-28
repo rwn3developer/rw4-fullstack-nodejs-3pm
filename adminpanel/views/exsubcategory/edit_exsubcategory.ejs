@@ -72,18 +72,7 @@
                                                     <option value="">---select subcategory---</option>
 
 
-                                                    <% subcategory.map((subcat)=> { %>
-                                                        <% if(single.subcategoryId?.subcategory==subcat?.subcategory) {
-                                                            %>
-                                                            <option value="<%= subcat?.subcategory %>" selected>
-                                                                <%= subcat?.subcategory %>
-                                                            </option>
-                                                            <% } else { %>
-                                                                <option value="<%= subcat?.subcategory %>">
-                                                                    <%= subcat?.subcategory %>
-                                                                </option>
-                                                                <% } %>
-                                                                    <% }) %>
+
 
 
                                                 </select>
@@ -142,7 +131,33 @@
     <script type="text/javascript">
 
 
+        const getSingleCategory = () => {
+            let catId = `<%= single?.categoryId.id %>`;
+            $.ajax({
+                type: "GET",
+                url: `/exsubcategory/ajaxgetsinglecategory?categoryId=${catId}`,
+                success: function (res) {
+                    let tbl = "";
+                    let duplicateSubcategory = new Set();
 
+                    res.category.map((cat) => {
+                        const categoryId = cat?.categoryId?._id;
+                        const subcategoryId = cat?.subcategoryId?.categoryId;
+                        const subcategory = cat?.subcategoryId?.subcategory;
+                        if (!duplicateSubcategory.has(subcategory)) {
+                            duplicateSubcategory.add(subcategory);
+                            if (categoryId == subcategoryId) {
+                                tbl += `<option selected value='${cat?.subcategoryId?._id}'>${subcategory}</option>`;
+                            } else {
+                                tbl += `<option  value='${cat?.subcategoryId?._id}'>${subcategory}</option>`;
+                            }
+                        }
+                    });
+                    document.getElementById('subcategory').innerHTML = tbl;
+                }
+            })
+        }
+        getSingleCategory();
 
         const categoryRecord = () => {
             let categoryid = document.getElementById('category').value;

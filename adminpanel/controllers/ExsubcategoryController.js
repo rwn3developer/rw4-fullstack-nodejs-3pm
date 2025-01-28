@@ -2,8 +2,6 @@ let CategoryModel = require('../models/CategoryModel');
 let SubCategoryModel = require('../models/SubcategoryModel');
 let ExSubCategoryModel = require('../models/ExsubcategoryModel');
 
-
-
 const viewexsubCategory = async (req, res) => {
     try {
         let exsubcategory = await ExSubCategoryModel.find({}).populate('categoryId').populate('subcategoryId')
@@ -32,7 +30,7 @@ const addexSubCategory = async (req, res) => {
 const ajaxCategorywiseRecord = async (req, res) => {
     try {
         let categoryid = req.query.categoryId;
-        let categorydata = await SubCategoryModel.find({ categoryId: categoryid }).populate('categoryId');
+        let categorydata = await SubCategoryModel.find({ categoryId: categoryid, status: 'active' }).populate('categoryId');
         return res.status(200).send({
             success: true,
             message: "record successfully fetch",
@@ -102,6 +100,20 @@ const changeStatus = async (req, res) => {
         return false
     }
 }
+const ajaxGetSingleCategory = async (req, res) => {
+    try {
+        const catid = req.query.categoryId;
+        let category = await ExSubCategoryModel.find({ categoryId: catid }).populate("categoryId").populate('subcategoryId');
+        return res.status(200).send({
+            success: true,
+            message: "record successfully fetch",
+            category: category
+        })
+    } catch (err) {
+        console.log(err);
+        return false
+    }
+}
 module.exports = {
-    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory
+    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory, ajaxGetSingleCategory
 }
