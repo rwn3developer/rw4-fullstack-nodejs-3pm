@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-const { viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory, ajaxGetSingleCategory } = require('../controllers/ExsubcategoryController');
+const { viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory } = require('../controllers/ExsubcategoryController');
 
 
 routes.get('/', viewexsubCategory)
@@ -14,6 +14,6 @@ routes.get('/editexsubcategory', editExsubcategory)
 routes.get('/changestatus', changeStatus)
 
 
-routes.get('/ajaxgetsinglecategory', ajaxGetSingleCategory)
+// routes.get('/ajaxgetsinglecategory', ajaxGetSingleCategory)
 
 module.exports = routes;

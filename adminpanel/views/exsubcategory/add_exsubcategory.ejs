@@ -126,8 +126,9 @@
                 type: "GET",
                 url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryid}`,
                 success: function (res) {
-
                     let category = res.category;
+                    console.log(category);
+
                     let tbl = "";
                     tbl += `<option value="">---select subcategory---</option>`
                     category.map((cat, index) => {

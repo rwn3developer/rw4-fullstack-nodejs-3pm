@@ -132,30 +132,21 @@
 
 
         const getSingleCategory = () => {
-            let catId = `<%= single?.categoryId.id %>`;
+            let categoryid = `<%= single?.categoryId.id %>`;
             $.ajax({
-                type: "GET",
-                url: `/exsubcategory/ajaxgetsinglecategory?categoryId=${catId}`,
+                type: 'get',
+                url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryid}`,
                 success: function (res) {
-                    let tbl = "";
-                    let duplicateSubcategory = new Set();
-
-                    res.category.map((cat) => {
-                        const categoryId = cat?.categoryId?._id;
-                        const subcategoryId = cat?.subcategoryId?.categoryId;
-                        const subcategory = cat?.subcategoryId?.subcategory;
-                        if (!duplicateSubcategory.has(subcategory)) {
-                            duplicateSubcategory.add(subcategory);
-                            if (categoryId == subcategoryId) {
-                                tbl += `<option selected value='${cat?.subcategoryId?._id}'>${subcategory}</option>`;
-                            } else {
-                                tbl += `<option  value='${cat?.subcategoryId?._id}'>${subcategory}</option>`;
-                            }
-                        }
+                    let category = res.category;
+                    let tbl = '<option value="" disabled selected>Select a subcategory</option>';
+                    category.map((subcategory) => {
+                        tbl += `<option value="${subcategory?._id}" ${subcategory?._id === "<%= single?.subcategoryId?._id %>" ? 'selected' : ''}>
+                                ${subcategory?.subcategory}
+                        </option>`;
                     });
                     document.getElementById('subcategory').innerHTML = tbl;
                 }
-            })
+            });
         }
         getSingleCategory();
 
@@ -174,6 +165,7 @@
                     document.getElementById('subcategory').innerHTML = tbl
                 }
             })
+
         }
     </script>
     <%- include('../footer') %>

@@ -71,14 +71,10 @@ const editExsubcategory = async (req, res) => {
     try {
         let id = req.query.id;
         let categories = await CategoryModel.find({ status: 'active' });
-        let subcategories = await SubCategoryModel.find({ status: 'active' }).populate('categoryId');
         let single = await ExSubCategoryModel.findById(id).populate('categoryId').populate('subcategoryId');
-
-
         return res.render('exsubcategory/edit_exsubcategory', {
             category: categories,
             single: single,
-            subcategory: subcategories
         });
     } catch (err) {
         console.log(err);
@@ -100,20 +96,6 @@ const changeStatus = async (req, res) => {
         return false
     }
 }
-const ajaxGetSingleCategory = async (req, res) => {
-    try {
-        const catid = req.query.categoryId;
-        let category = await ExSubCategoryModel.find({ categoryId: catid }).populate("categoryId").populate('subcategoryId');
-        return res.status(200).send({
-            success: true,
-            message: "record successfully fetch",
-            category: category
-        })
-    } catch (err) {
-        console.log(err);
-        return false
-    }
-}
 module.exports = {
-    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory, ajaxGetSingleCategory
+    viewexsubCategory, addexSubCategory, ajaxCategorywiseRecord, insertExsubcategory, deleteExSubcategory, changeStatus, editExsubcategory,
 }
