@@ -30,11 +30,13 @@ const addexSubCategory = async (req, res) => {
 const ajaxCategorywiseRecord = async (req, res) => {
     try {
         let categoryid = req.query.categoryId;
-        let categorydata = await SubCategoryModel.find({ categoryId: categoryid, status: 'active' }).populate('categoryId');
+        console.log(categoryid);
+
+        let subcategorydata = await SubCategoryModel.find({ categoryId: categoryid, status: 'active' }).populate('categoryId');
         return res.status(200).send({
             success: true,
             message: "record successfully fetch",
-            category: categorydata
+            subcategory: subcategorydata
         })
     } catch (err) {
         console.log(err);

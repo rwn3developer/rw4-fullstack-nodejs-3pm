@@ -137,11 +137,11 @@
                 type: 'get',
                 url: `/exsubcategory/ajaxcategorywiserecord?categoryId=${categoryid}`,
                 success: function (res) {
-                    let category = res.category;
+                    let subcategory = res.subcategory;
                     let tbl = '<option value="" disabled selected>Select a subcategory</option>';
-                    category.map((subcategory) => {
-                        tbl += `<option value="${subcategory?._id}" ${subcategory?._id === "<%= single?.subcategoryId?._id %>" ? 'selected' : ''}>
-                                ${subcategory?.subcategory}
+                    subcategory.map((subcate) => {
+                        tbl += `<option value="${subcate?._id}" ${subcate?._id === "<%= single?.subcategoryId?._id %>" ? 'selected' : ''}>
+                                ${subcate?.subcategory}
                         </option>`;
                     });
                     document.getElementById('subcategory').innerHTML = tbl;
