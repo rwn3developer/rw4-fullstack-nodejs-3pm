@@ -1,0 +1,132 @@
+<%- include('../header') %>
+
+
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <!-- <h4 class="page-title">Tables</h4> -->
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <% if(locals?.message?.success) { %>
+                            <div class="alert alert-success" role="alert">
+                                <%= locals?.message?.success %>
+                            </div>
+                            <% } %>
+
+                                <% if(locals?.message?.delete) { %>
+                                    <div class="alert alert-danger" role="alert">
+                                        <%= locals?.message?.delete %>
+                                    </div>
+                                    <% } %>
+                                        <div class="card-body">
+                                            <h5 class="card-title m-b-0">View Category</h5>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">Category</th>
+                                                    <th scope="col">Subcategory</th>
+                                                    <th scope="col">Action</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% subcategory.map((subcat,index)=>{ %>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <%= ++index %>
+                                                        </th>
+                                                        <td>
+                                                            <%= subcat?.categoryId?.category %>
+                                                        </td>
+                                                        <td>
+                                                            <%= subcat?.subcategory %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/subcategory/deletesubcategory?id=<%= subcat?.id %>"
+                                                                class="btn btn-danger btn-sm">Delete</a>
+
+
+                                                            <a href="/subcategory/editsubcategory?id=<%= subcat?.id %>"
+                                                                class="btn btn-primary btn-sm">Edit</a>
+                                                        </td>
+                                                        <td>
+
+                                                            <% if(subcat?.status==="active" ) { %>
+                                                                <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=deactive"
+                                                                    class="btn btn-success btn-sm">
+                                                                    <%= subcat?.status %>
+                                                                </a>
+                                                                <% } else { %>
+                                                                    <a href="/subcategory/changestatus?id=<%= subcat?.id %>&status=active"
+                                                                        class="btn btn-danger btn-sm">
+                                                                        <%= subcat?.status %>
+                                                                    </a>
+                                                                    <% } %>
+
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center">
+            All Rights Reserved by Matrix-admin. Designed and Developed by <a
+                href="https://wrappixel.com">WrapPixel</a>.
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+
+
+
+    <%- include('../footer') %>
