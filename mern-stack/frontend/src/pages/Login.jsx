@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../component/Header'
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContex';
 import { useNavigate } from 'react-router-dom';
-
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,16 +10,25 @@ const Login = () => {
     const [auth, setAuth] = useAuth()
     const navigate = useNavigate();
 
+    console.log(auth?.token);
+
+
+    useEffect(() => {
+        if (auth?.token?.role == "admin") {
+            navigate('/admin/dashboard');
+        } else if (auth?.token?.role == "manager") {
+            navigate('/manager/dashboard');
+        } else if (auth?.token?.role == "user") {
+            navigate('/user/dashboard');
+        }
+    }, [auth?.token])
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         if (!email || !password) {
             toast.error("All field is required");
             return false;
         }
-
-        console.log(email, password);
-
         let res = await fetch(`http://localhost:8000/login`, {
             method: 'POST',
             headers: {
@@ -31,28 +39,34 @@ const Login = () => {
                 password: password
             })
         })
-
         let user = await res.json();
 
+
         if (user.success) {
-            toast.success(user.success);
-            localStorage.setItem('token', user.token);
+            localStorage.setItem('token', JSON.stringify(user?.user));
             setAuth({
                 ...auth,
-                token: user.token,
+                token: user?.user,
             })
-
-            setTimeout(() => {
-                navigate('admin/dashboard')
-            }, 2000)
+            let userrole = user?.user?.role;
+            toast.success(user?.message);
+            if (userrole == "admin") {
+                setTimeout(() => {
+                    navigate('admin/dashboard')
+                }, 2000)
+            } else if (userrole == "manager") {
+                setTimeout(() => {
+                    navigate('manager/dashboard')
+                }, 2000)
+            } else {
+                setTimeout(() => {
+                    navigate('user/dashboard')
+                }, 2000)
+            }
         } else {
             toast.error(user.error);
         }
-
-
-
     }
-
     return (
         <>
             <Header />

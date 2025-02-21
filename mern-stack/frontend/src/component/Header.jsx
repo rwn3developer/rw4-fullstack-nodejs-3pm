@@ -1,7 +1,25 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContex'
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Header = () => {
+
+    const navigate = useNavigate();
+    const [auth, setAuth] = useAuth();
+    const logoutUser = () => {
+        setAuth({
+            ...auth,
+            token: null
+        })
+        localStorage.removeItem('token');
+        toast.success("User Logout Successfully")
+        setTimeout(() => {
+            navigate('/')
+        }, 2000)
+    }
+
     return (
         <div className='bg-info'>
             <div className='container'>
@@ -21,12 +39,17 @@ const Header = () => {
                                     <Link to={`/register`} className="nav-link active" aria-current="page">Register</Link>
                                 </li>
 
+                                <li className="nav-item">
+                                    <button className='btn btn-danger btn-sm' onClick={() => logoutUser()}>Logout</button>
+                                </li>
+
                             </ul>
 
                         </div>
                     </div>
                 </nav>
             </div>
+            <ToastContainer />
         </div>
 
     )
