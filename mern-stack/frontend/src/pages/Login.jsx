@@ -10,15 +10,16 @@ const Login = () => {
     const [auth, setAuth] = useAuth()
     const navigate = useNavigate();
 
-    console.log(auth?.token);
+
 
 
     useEffect(() => {
-        if (auth?.token?.role == "admin") {
+        const userRole = auth?.token?.user?.role
+        if (userRole == "admin") {
             navigate('/admin/dashboard');
-        } else if (auth?.token?.role == "manager") {
+        } else if (userRole == "manager") {
             navigate('/manager/dashboard');
-        } else if (auth?.token?.role == "user") {
+        } else if (userRole == "user") {
             navigate('/user/dashboard');
         }
     }, [auth?.token])
@@ -40,16 +41,19 @@ const Login = () => {
             })
         })
         let user = await res.json();
-
-
         if (user.success) {
-            localStorage.setItem('token', JSON.stringify(user?.user));
+            let userlogin = {
+                token: user.token,
+                user: user?.user
+            }
+            localStorage.setItem('token', JSON.stringify(userlogin));
             setAuth({
                 ...auth,
-                token: user?.user,
+                token: userlogin,
             })
             let userrole = user?.user?.role;
             toast.success(user?.message);
+
             if (userrole == "admin") {
                 setTimeout(() => {
                     navigate('admin/dashboard')
@@ -64,7 +68,7 @@ const Login = () => {
                 }, 2000)
             }
         } else {
-            toast.error(user.error);
+            toast.error("Email and Password not valid");
         }
     }
     return (

@@ -1,5 +1,6 @@
 let UserModel = require('../models/UserModel');
 let JWT = require('jsonwebtoken');
+const cloudinary = require('cloudinary').v2
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -26,11 +27,24 @@ const loginUser = async (req, res) => {
 }
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, gender, city, contact } = req.body;
+
+        if (!name || !email || !password || !gender || !city || !contact || !req.file) {
+            return res.status(400).send({
+                success: false,
+                message: 'Please fill all the fields'
+            });
+        }
+        let imageRecord = await cloudinary.uploader.upload(req.file.path);
         let user = new UserModel({
             name: name,
             email: email,
-            password: password
+            password: password,
+            gender: gender,
+            city: city,
+            contact: contact,
+            image: imageRecord?.secure_url,
+            public_id: imageRecord?.public_id
         })
         let record = await user.save();
         return res.status(200).send({

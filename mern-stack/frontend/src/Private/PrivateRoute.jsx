@@ -7,7 +7,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     if (!auth?.token) {
         return <Navigate to="/" />
     }
-    const userrole = auth?.token?.role;
+    const userrole = auth?.token?.user?.role;
     if (allowedRoles && !allowedRoles.includes(userrole)) {
         return <Navigate to="/" />
     }
