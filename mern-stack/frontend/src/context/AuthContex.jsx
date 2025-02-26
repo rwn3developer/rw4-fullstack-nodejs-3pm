@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
     )
 
 }
-
+//custom hook
 const useAuth = () => {
     return useContext(AuthContext);
 }

@@ -1,32 +1,37 @@
 import React, { useState } from 'react'
 import Header from '../component/Header'
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-
+    const navigate = useNavigate()
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [gender, setGender] = useState("");
+    const [city, setCity] = useState("");
+    const [contact, setContact] = useState("");
+    const [image, setImage] = useState("");
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        const formdata = new FormData;
+        formdata.append("name", name)
+        formdata.append("email", email)
+        formdata.append("password", password)
+        formdata.append("gender", gender)
+        formdata.append("city", city)
+        formdata.append("contact", contact)
+        formdata.append("userimage", image)
         try {
-            if (!name || !email || !password) {
+            if (!name || !email || !password || !gender || !city || !contact || !image) {
                 toast.error("All filed is required");
                 return false;
             }
-
             let res = await fetch(`http://localhost:8000/register`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    password: password
-                })
+                body: formdata
             })
             let user = await res.json();
             if (user.success) {
@@ -34,6 +39,9 @@ const Register = () => {
                 setName("");
                 setEmail("");
                 setPassword("");
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000)
             } else {
                 toast.error(user.message)
             }
@@ -69,6 +77,30 @@ const Register = () => {
                                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                                     <input type="password" onChange={(e) => setPassword(e.target.value)} value={password} className="form-control" placeholder='Enter your password' />
                                 </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="exampleInputPassword1" className="form-label">Gender :- </label>
+                                    <br></br>
+                                    <input type="radio" name='gender' onChange={(e) => setGender(e.target.value)} value="male" />Male
+                                    &nbsp;
+                                    <input type="radio" name='gender' onChange={(e) => setGender(e.target.value)} value="female" />Female
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="exampleInputEmail1" className="form-label">City</label>
+                                    <input type="text" onChange={(e) => setCity(e.target.value)} value={city} className="form-control" placeholder='Enter your city' />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="exampleInputEmail1" className="form-label">Conatct</label>
+                                    <input type="text" onChange={(e) => setContact(e.target.value)} value={contact} className="form-control" placeholder='Enter your contact' />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="exampleInputEmail1" className="form-label">Image</label>
+                                    <input type="file" onChange={(e) => setImage(e.target.files[0])} className="form-control" placeholder='Enter your contact' />
+                                </div>
+
 
                                 <button type="submit" className="btn btn-primary">Submit</button>
                             </form>
