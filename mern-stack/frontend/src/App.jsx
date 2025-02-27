@@ -5,9 +5,10 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 
 import PrivateRoute from './Private/PrivateRoute'
-import Admin from './pages/Admin'
+import Admin from './pages/admin/Admin'
 import Manager from './pages/Manager'
 import User from './pages/User'
+import Adminuser from './pages/admin/Adminuser'
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
 
         <Route path='/admin' element={<PrivateRoute allowedRoles={['admin']} />}>
           <Route path='dashboard' element={<Admin />} />
+          <Route path='users' element={<Adminuser />} />
+
         </Route>
 
 
