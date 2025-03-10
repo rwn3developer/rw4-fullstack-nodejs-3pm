@@ -6,9 +6,10 @@ import Register from './pages/Register'
 
 import PrivateRoute from './Private/PrivateRoute'
 import Admin from './pages/admin/Admin'
-import Manager from './pages/Manager'
-import User from './pages/User'
+import User from './pages/user/User'
 import Adminuser from './pages/admin/Adminuser'
+import Adminedit from './pages/admin/Adminedit'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -20,17 +21,23 @@ function App() {
         <Route path='/admin' element={<PrivateRoute allowedRoles={['admin']} />}>
           <Route path='dashboard' element={<Admin />} />
           <Route path='users' element={<Adminuser />} />
+          <Route path='edituser' element={<Adminedit />} />
 
         </Route>
 
-
-        <Route path='/manager' element={<PrivateRoute allowedRoles={['admin', 'manager']} />}>
+        {/* Admin manager role access */}
+        {/* <Route path='/manager' element={<PrivateRoute allowedRoles={['admin', 'manager']} />}>
           <Route path='dashboard' element={<Manager />} />
-        </Route>
+        </Route> */}
 
         <Route path='/user' element={<PrivateRoute allowedRoles={['user']} />}>
           <Route path='dashboard' element={<User />} />
         </Route>
+
+
+        {/* user profile route */}
+
+        <Route path='/changeprofile' element={<Profile />} />
 
 
 

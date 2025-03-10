@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../component/Header'
 import Adminsidebar from '../../component/Adminsidebar'
 import { useAuth } from '../../context/AuthContex'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const Adminuser = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([])
+    const navigate = useNavigate();
 
     const fetchUser = async () => {
         try {
@@ -32,6 +35,27 @@ const Adminuser = () => {
         fetchUser();
     }, [])
 
+    const deleteUser = async (id) => {
+        try {
+            let res = await fetch(`http://localhost:8000/admin/deleteuser?userid=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.token}`
+                }
+            })
+            let data = await res.json();
+            if (data.success) {
+                toast.error("User successfully delete");
+                fetchUser();
+            }
+        } catch (err) {
+            console.log(err);
+            return false;
+
+        }
+    }
+
     return (
 
         <>
@@ -54,10 +78,7 @@ const Adminuser = () => {
                                     <th scope="col">Contact</th>
                                     <th scope="col">City</th>
                                     <th>Image</th>
-                                    <th>Role</th>
-
-
-
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,19 +97,8 @@ const Adminuser = () => {
                                                     <img src={val.image} width="100" />
                                                 </td>
                                                 <td>
-                                                    <select className='form-control'>
-                                                        <option>---select role--</option>
-                                                        {
-                                                            ['admin', 'manager', 'user'].map((role, index) => {
-                                                                return (
-                                                                    <option key={index} value={role} selected={val.role === role ? true : undefined}>
-                                                                        {role}
-                                                                    </option>
-
-                                                                )
-                                                            })
-                                                        }
-                                                    </select>
+                                                    <button className='btn btn-danger btn-sm' onClick={() => deleteUser(val?._id)}>Delete</button>&nbsp;
+                                                    <button className='btn btn-primary btn-sm' onClick={() => navigate(`/admin/edituser`, { state: val })}>Edit</button>
                                                 </td>
                                             </tr>
                                         )

@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-const { loginUser, registerUser, dummyApi, allUser } = require('../controllers/AuthController');
+const { loginUser, registerUser, dummyApi, allUser, changeProfile } = require('../controllers/AuthController');
 const { verifyToken, authorizeRole } = require('../middleware/Auth');
 
 const multer = require('multer');
@@ -18,6 +18,7 @@ routes.post('/login', loginUser)
 routes.post('/register', userImage, registerUser)
 routes.get('/dummyapi', verifyToken, dummyApi)
 routes.get('/adminalluser', verifyToken, authorizeRole(['admin']), allUser)
+routes.put('/changeprofile', verifyToken, userImage, changeProfile)
 
 
 module.exports = routes;

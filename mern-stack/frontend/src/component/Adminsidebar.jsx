@@ -3,11 +3,7 @@ import Header from './Header'
 import { Link, useLocation } from 'react-router-dom'
 
 const Adminsidebar = () => {
-
     let location = useLocation();
-
-
-
     return (
         <>
             <div className="row">
@@ -20,15 +16,12 @@ const Adminsidebar = () => {
                             User
                         </Link>
 
-                        <Link className="list-group-item list-group-item-action" aria-current="true">
-                            Manager
-                        </Link>
 
                         <Link className="list-group-item list-group-item-action" aria-current="true">
                             Blog
                         </Link>
 
-                        <Link className="list-group-item list-group-item-action" aria-current="true">
+                        <Link to={`/changeprofile`} className={`list-group-item list-group-item-action ${location?.pathname == '/changeprofile' ? 'active' : ''}`} aria-current="true">
                             Profile
                         </Link>
 

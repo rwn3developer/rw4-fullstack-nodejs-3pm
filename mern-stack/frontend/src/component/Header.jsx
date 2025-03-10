@@ -8,6 +8,10 @@ const Header = () => {
 
     const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
+
+
+
+
     const logoutUser = () => {
         setAuth({
             ...auth,
@@ -31,17 +35,27 @@ const Header = () => {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <Link to={`/`} className="nav-link active" aria-current="page">Login</Link>
-                                </li>
 
-                                <li className="nav-item">
-                                    <Link to={`/register`} className="nav-link active" aria-current="page">Register</Link>
-                                </li>
+                                {
+                                    !auth.token ? (
+                                        <>
+                                            <li className="nav-item">
+                                                <Link to={`/`} className="nav-link active" aria-current="page">Login</Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link to={`/register`} className="nav-link active" aria-current="page">Register</Link>
+                                            </li>
 
-                                <li className="nav-item">
-                                    <button className='btn btn-danger btn-sm' onClick={() => logoutUser()}>Logout</button>
-                                </li>
+                                        </>
+                                    ) : (
+                                        <li className="nav-item">
+                                            <button className='btn btn-danger btn-sm' onClick={() => logoutUser()}>Logout</button>
+                                        </li>
+                                    )
+                                }
+
+
+
 
                             </ul>
 

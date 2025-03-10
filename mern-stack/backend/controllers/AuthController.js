@@ -77,6 +77,54 @@ const allUser = async (req, res) => {
         })
     }
 }
+const changeProfile = async (req, res) => {
+    try {
+        // console.log(req.body);
+        // console.log(req.file);
+        const { userid, name, email, password, gender, city, contact } = req.body;
+        if (req.file) {
+            let oldimage = await UserModel.findById(userid);
+            await cloudinary.uploader.destroy(oldimage.public_id)
+            //new image add
+            let newimage = await cloudinary.uploader.upload(req.file.path);
+            await UserModel.findByIdAndUpdate(userid, {
+                name: name,
+                email: email,
+                password: password,
+                gender: gender,
+                city: city,
+                contact: contact,
+                image: newimage?.secure_url,
+                public_id: newimage?.public_id
+            })
+            return res.status(200).send({
+                success: true,
+                message: "User profile successfully change",
+            })
+        } else {
+            let oldimage = await UserModel.findById(userid);
+            await UserModel.findByIdAndUpdate(userid, {
+                name: name,
+                email: email,
+                password: password,
+                gender: gender,
+                city: city,
+                contact: contact,
+                image: oldimage?.image,
+                public_id: oldimage?.public_id
+            })
+        }
+        return res.status(200).send({
+            success: true,
+            message: "User profile successfully change",
+        })
+    } catch (err) {
+        return res.status(501).send({
+            success: false,
+            error: err
+        })
+    }
+}
 module.exports = {
-    loginUser, registerUser, dummyApi, allUser
+    loginUser, registerUser, dummyApi, allUser, changeProfile
 }
